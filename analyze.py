@@ -15,7 +15,7 @@ def load_csv(filename):
         node = (int(post_id), int(repost_id), int(followers))
         parsed_lines.append(node)
 
-    parsed_lines.sort(key=lambda line:line[0], reverse=True) # Could be replaced by reversed() in py3.5 for less hassle
+    parsed_lines.sort(key=lambda line:line[0], reverse=True) # Could be replaced by reversed() on OrderedDict in py3.5 for less hassle
     for line in parsed_lines:
         node = {
             "post_id": line[0],
@@ -27,12 +27,15 @@ def load_csv(filename):
     return nodes
 
 def is_root(node):
+    """ Return true if the node is a root node """
     return node["repost_id"] == -1
 
 def get_parent(node, nodes):
+    """ Returns the parent of this node. """
     return nodes[node["repost_id"]]
 
 def get_follower_totals(nodes):
+    """ Returns dict of root_post_ids to follower counts """
     totals = {}
     for post_id, node in nodes.items():
         if is_root(node):
@@ -43,11 +46,8 @@ def get_follower_totals(nodes):
     return totals
 
 if __name__ == '__main__':
-    nodes = load_csv("big_network.csv")
+    nodes = load_csv("network.csv")
+    #nodes = load_csv("big_network.csv")    
     follower_totals = get_follower_totals(nodes)
     for root_post_id, total in follower_totals.items():
         print("{0}: {1}".format(root_post_id, total))
-
-
-
-#performance?
