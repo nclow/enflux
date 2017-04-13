@@ -12,8 +12,8 @@ def load_csv(filename):
 
     for line in lines:
         post_id, repost_id, followers = line.split(",")
-        node = (int(post_id), int(repost_id), int(followers))
-        parsed_lines.append(node)
+        parsed_line = (int(post_id), int(repost_id), int(followers))
+        parsed_lines.append(parsed_line)
 
     parsed_lines.sort(key=lambda line:line[0], reverse=True) # Could be replaced by reversed() on OrderedDict in py3.5 for less hassle
     for line in parsed_lines:
